@@ -59,3 +59,15 @@ export const getGoodInfoApi = (id) => {
 		},
 	});
 };
+// 获取我们的热门数据
+export const getHotGoodApi = (id, type, limit) => {
+	return requerst({
+		url: "/goods/hot",
+		method: "GET",
+		params: {
+			id,
+			type,
+			limit,
+		},
+	});
+};

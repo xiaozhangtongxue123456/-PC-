@@ -64,7 +64,13 @@
 			<!-- 图片展示 -->
 			<img :src="item" alt="" v-for="item in goodDetail.goodInfo.details.pictures" :key="item" style="width: 100%" />
 		</div>
-		<div class="hot-img"><hotItem title="24小时热榜" :hotItem="goodDetail.goodInfo.hotByDay" /></div>
+		<div></div>
+		<!-- 日热门榜 -->
+		<div class="hot-img">
+			<hotItem title="24小时热榜" :hotItem="hotGood.dayHotGoodData" />
+			<!-- 周热门榜 -->
+			<hotItem title="周热榜" :hotItem="hotGood.weekHotGoodData" />
+		</div>
 	</div>
 </template>
 
@@ -77,6 +83,10 @@ import hotItem from "@/components/hotitem.vue";
 // 引入我们获取商品个体信息的api
 import getGoodInfo from "@/hooks/getGoodinfo/getGoodInfo";
 const { goodDetail, getgood } = getGoodInfo();
+// 引入我们的获取热门数据的api
+import getHotGood from "@/hooks/useGetHotGood";
+const { getHotGoodData, hotGood } = getHotGood();
+
 const route = useRoute();
 // 定义我们数据
 // const data = reactive({
@@ -88,6 +98,10 @@ onMounted(() => {
 	// 获取我们的商品个体信息
 	// console.log(route.query.id);
 	getgood(route.query.id);
+	// 获取我们的热门商品的函数:日数据
+	getHotGoodData(route.query.id, 1, 6);
+	// 获取我们的热门商品的函数:周数据数据
+	getHotGoodData(route.query.id, 2, 6);
 });
 </script>
 
@@ -191,16 +205,14 @@ onMounted(() => {
 	margin: 0 10%;
 	.good-introduce {
 		flex: 4;
-
-		margin-top: 20px;
+		margin-top: 10px;
 		h1 {
 			margin: 0;
 			padding: 0;
 			height: 60px;
 			line-height: 60px;
-			border-bottom: 1px solid #efefef;
+			border-bottom: 1px solid #441c1c;
 			box-sizing: border-box;
-			padding-left: 10px;
 		}
 		ul {
 			margin: 0;
