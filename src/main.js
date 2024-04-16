@@ -16,10 +16,12 @@ import "element-plus/dist/index.css";
 // 引入我们图标库
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 const app = createApp(App);
-
+//引入我们的pinia持久化
+import PiniaPluginPersist from "pinia-plugin-persist";
+pinina.use(PiniaPluginPersist);
 // 注册我们的图标组件库
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-	app.component(key, component);
+  app.component(key, component);
 }
 
 // 挂载我们的所有请求api
@@ -27,6 +29,8 @@ app.config.globalProperties.$api = API;
 // 引入我们懒加载图片的插件
 import { LazyImg } from "@/direactive/lazyimg";
 app.use(LazyImg);
+// 注册我们的全局组件
+// app.component()
 // 注册我们pinia
 app.use(pinina);
 
